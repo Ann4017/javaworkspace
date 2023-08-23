@@ -1,9 +1,0 @@
-package java001;
-
-public class Hello {
-	//main() ÇÊ¿ä
-	public static void main(Int[] args) {
-		System.out.print(111);
-	}
-	
-}
