@@ -1,0 +1,22 @@
+
+public class Tv {
+  // 속성
+
+  String color;
+  boolean power;
+  int channel;
+
+  // 기능
+  void channel_up() {
+    channel++;
+  }
+
+  void channel_down() {
+    channel--;
+  }
+
+  void power() {
+    power = !power;
+  }
+
+}
