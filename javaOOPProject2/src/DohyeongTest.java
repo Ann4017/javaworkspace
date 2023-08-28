@@ -12,10 +12,10 @@ public class DohyeongTest {
     // Point p2 = new Point(30, 40);
     // Point p3 = new Point(50, 60);
 
-    Point[] p = {new Point(10, 20), new Point(30, 40), new Point(50, 60)};
+    // Point[] p = {new Point(10, 20), new Point(30, 40), new Point(50, 60)};
 
-    Triangle t = new Triangle(p);
-    t.draw();
+    // Triangle t = new Triangle(p);
+    // t.draw();
 
     // Point - Triangle - draw
 

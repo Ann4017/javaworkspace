@@ -9,6 +9,15 @@ public class Point {
     this.y = y;
   }
 
+  // Point(){ // object 호출 생략
+  // super();
+  // }
+
+  // Point(int x, int y) {
+  // this.x = x;
+  // this.y = y;
+  // }
+
   String get_location() {
     return "x : " + x + ", y : " + y;
   }
