@@ -30,6 +30,25 @@ public class Word_game_app {
     System.out.println("===========================");
 
     create_players();
+
+    String last_word = start_word;
+
+    System.out.println("시작 단어 : " + last_word);
+
+    int next = 0;
+
+    while (true) {
+      String new_word = players[next].get_word_from_user();
+
+      if (!players[next].check_success(last_word)) {
+        System.out.printf("%s 님이 패배 하셨습니다.\n", players[next].get_name());
+        System.out.println("게임 종료");
+        break;
+      }
+      next++;
+      next %= players.length;
+      last_word = new_word;
+    }
   }
 
 
