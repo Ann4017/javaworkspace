@@ -1,0 +1,4 @@
+#test properties
+#Mon Sep 04 19:27:15 KST 2023
+name=abh
+age=10
