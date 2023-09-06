@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @AllArgsConstructor
 @ToString
-public class Student implements Comparable {
+public class Student implements Comparable<Student> {
 
   String name;
   int ban;
@@ -21,16 +21,16 @@ public class Student implements Comparable {
   }
 
   @Override
-  public int compareTo(Object o) {
+  public int compareTo(Student s) {
 
-    if (o instanceof Student) {
-      Student other = (Student) o;
-      // return this.name.compareTo(other.name); // 문자열
-      // return this.ko - other.ko; // 1, 0, -1 대표 값 오름차순
-      return other.ko - this.ko; // 내림차순
-    }
+    // if (o instanceof Student) {
+    // Student other = (Student) o;
+    // // return this.name.compareTo(other.name); // 문자열
+    // // return this.ko - other.ko; // 1, 0, -1 대표 값 오름차순
+    // return other.ko - this.ko; // 내림차순
+    // }
 
-    return 0;
+    return this.ko - s.ko;
   }
 
 
