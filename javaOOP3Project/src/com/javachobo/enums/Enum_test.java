@@ -39,6 +39,7 @@ public class Enum_test {
     // System.out.println(Week.SATURDAY.kor);
 
     System.out.println(Week.SATURDAY.getKor()); // private 하기 때문에 getter를 이용해야 한다.
+
   }
 
 }
