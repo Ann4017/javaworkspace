@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+    console.log('statusChangeCallback');
+    console.log(response);                   // The current login status of the person.
+    if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+       document.querySelector('#auth_btn').value = 'Logout';
+       FB.api(
+    		    "/me/",
+    		    function (response) {
+    		    	document.querySelector('#name').innerHTML = response.name;
+    		    }
+    		);
+    } else {                                 // Not logged into your webpage or we are unable to tell.
+		document.querySelector('#auth_btn').value = 'Login';
+		document.querySelector('#name').innerHTML = '';
+    }
+  }
+
+window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '878845266651166',
+      cookie     : true,                     // Enable cookies to allow the server to access the session.
+      xfbml      : true,                     // Parse social plugins on this webpage.
+      version    : 'v18.0'           // Use this Graph API version for this call.
+    });
+
+
+    FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
+      statusChangeCallback(response);        // Returns the login status.
+    });
+  };
+</script>
+</head>
+<body>
+
+<input type="button" id="auth_btn" value="facebook login" onclick="if (this.value == 'Login'){
+	// 로그아웃 상태
+	FB.login(function(response){
+		  // handle the response 
+		  console.log('logout -> response');
+		  statusChangeCallback(response);
+		});
+}else {
+	// 로그인 상태
+	FB.logout(function(response) {
+		   // Person is now logged out
+		  console.log('login -> response');
+		  statusChangeCallback(response);
+		});
+}">
+
+<span id="name"></span>
+
+<!-- Load the JS SDK asynchronously -->
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+</body>
+</html>
