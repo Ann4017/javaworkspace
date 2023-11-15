@@ -1,0 +1,24 @@
+EL ( expression language )
+
+형식 : ${값}
+
+- jsp 내장객체의 속성을 사용할 수 있다.
+- 연산 가능
+- 자바의 메소드 호출
+- jsp 처럼 파라미터도 받을 수 있다.
+
+- 영역 객체
+pageContext, request, session, application
+공통 함수 : setAttribute(), getAttribute()
+
+- EL 내장객체
+pageScope, requestScope, sessionScope, applicationScope
+
+
+--------------------------------------------
+
+태그 라이브러리 (JSTL)
+- 자바 코드를 대신해서 사용한다.
+- 코드의 복잡성을 낮추는 역할
+
+<%@ taglib prefix="값" url="값" %>

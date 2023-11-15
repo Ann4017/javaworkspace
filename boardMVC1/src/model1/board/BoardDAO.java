@@ -76,6 +76,45 @@ public class BoardDAO extends JDBConnect {
 		return list;
 	}
 
+	public ArrayList<BoardDTO> select_list_page(Map<String, Object> map) {
+
+		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
+
+		String query = "select * FROM (select rownum rnum, tb.* from (select * from board";
+
+		if (map.get("search_word") != null) {
+			query += " where " + map.get("search_field") + " like '%" + map.get("search_word") + "%'";
+		}
+
+		query += " order by num desc) tb) where rnum BETWEEN ? and ?";
+
+		try {
+
+			psmt = conn.prepareStatement(query);
+			psmt.setString(1, map.get("start").toString());
+			psmt.setString(2, map.get("end").toString());
+
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				BoardDTO dto = new BoardDTO();
+
+				dto.setNum(rs.getString("num"));
+				dto.setTitle(rs.getString("title"));
+				dto.setContent(rs.getString("content"));
+				dto.setId(rs.getString("id"));
+				dto.setPostdate(rs.getDate("postdate"));
+				dto.setVisitcount(rs.getString("visitcount"));
+
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
 	public int insert_write(BoardDTO dto) {
 		int result = 0;
 		String query = "insert into board (num, title, content, id, visitcount) values (seq_board_num.nextval, ?, ?, ?, 0)";
