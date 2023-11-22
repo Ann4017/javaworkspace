@@ -6,6 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+body {
+	font-family: 고딕체;
+}
+
+a:link {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+</style>
 </head>
 <body>
 	<h2>파일 첨부형 게시판 - 목록 보기(List)</h2>
@@ -46,7 +60,7 @@
 				<c:forEach items="${board_lists }" var="row" varStatus="loop">
 					<tr align="center">
 						<td>${params.total_cnt - (((params.page_num - 1) * params.page_size) + loop.index)}</td>
-						<td>${row.title }</td>
+						<td><a href="./view.do?idx=${row.idx }">${row.title }</a></td>
 						<td>${row.name }</td>
 						<td>${row.visitcount }</td>
 						<td>${row.postdate }</td>

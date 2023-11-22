@@ -49,6 +49,11 @@
 		<param-name>pages_per_block</param-name>
 		<param-value>5</param-value>
 	</context-param>
+	<!-- 첨부 파일 최대 용량 설정 -->
+	<context-param>
+		<param-name>max_post_size</param-name>
+		<param-value>10240000</param-value>
+	</context-param>
 
 	<!-- 한글 깨짐 필터 매핑 -->
 	<filter>

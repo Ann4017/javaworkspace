@@ -11,27 +11,30 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 
 import fileupload.FileUtil;
 import utils.JSFunction;
 
-@WebServlet("/mvcboard/write.do")
-
-public class WriteController extends HttpServlet {
+@WebServlet("/mvcboard/edit.do")
+public class EditController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest _req, HttpServletResponse _resp) throws ServletException, IOException {
-		// 글 쓰기 폼 요청
-		_req.getRequestDispatcher("../write.jsp").forward(_req, _resp);
-//		_resp.sendRedirect("../write.jsp");
+
+		String idx = _req.getParameter("idx");
+		MVCBoardDAO dao = new MVCBoardDAO();
+		MVCBoardDTO dto = new MVCBoardDTO();
+
+		dto = dao.select_view(idx);
+		_req.setAttribute("dto", dto);
+		_req.getRequestDispatcher("/Edit.jsp").forward(_req, _resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest _req, HttpServletResponse _resp) throws ServletException, IOException {
-		// 글 쓰기 데이터 저장
-
 		// 1. 파일 업로드 처리
 		String save_directory = _req.getServletContext().getRealPath("/Uploads");
 
@@ -50,11 +53,25 @@ public class WriteController extends HttpServlet {
 			return;
 		}
 
+		// 2. 파일 이외의 정보
+		String idx = mr.getParameter("idx");
+		String prev_ofile = mr.getParameter("prev_ofile");
+		String prev_sfile = mr.getParameter("prev_sfile");
+
+		String name = mr.getParameter("name");
+		String title = mr.getParameter("title");
+		String content = mr.getParameter("content");
+
 		MVCBoardDTO dto = new MVCBoardDTO();
-		dto.setName(mr.getParameter("name"));
-		dto.setTitle(mr.getParameter("title"));
-		dto.setContent(mr.getParameter("content"));
-		dto.setPass(mr.getParameter("pass"));
+		HttpSession session = _req.getSession();
+
+		String pass = (String) session.getAttribute("pass");
+
+		dto.setIdx(idx);
+		dto.setName(name);
+		dto.setTitle(title);
+		dto.setContent(content);
+		dto.setPass(pass);
 
 		String file_name = mr.getFilesystemName("ofile");
 
@@ -72,18 +89,24 @@ public class WriteController extends HttpServlet {
 
 			dto.setOfile(file_name);
 			dto.setSfile(new_file_name);
+
+			FileUtil.delete_file(_req, "/Uploads", prev_sfile);
+
+		} else {
+			dto.setOfile(prev_ofile);
+			dto.setSfile(prev_sfile);
 		}
 
 		MVCBoardDAO dao = new MVCBoardDAO();
-		int result = dao.insert_write(dto);
+		int result = dao.update_post(dto);
 		dao.close();
 
 		if (result > 0) {
-			_resp.sendRedirect("./list.do");
+			session.removeAttribute("pass");
+			_resp.sendRedirect("./view.do?idx=" + idx);
 		} else {
-			_resp.sendRedirect("./write.do");
+			JSFunction.alert_location("비밀번호 검증을 다시 진행 해주세요.", "./view.do?idx=" + idx, _resp);
 		}
-
 	}
 
 }
