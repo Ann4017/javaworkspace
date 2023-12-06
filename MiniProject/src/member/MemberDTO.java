@@ -1,0 +1,12 @@
+package member;
+
+import lombok.Data;
+
+@Data
+public class MemberDTO {
+	private String id;
+	private String pass;
+	private String name;
+	private String email;
+	private String comment;
+}
